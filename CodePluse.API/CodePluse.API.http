@@ -1,0 +1,6 @@
+@CodePluse.API_HostAddress = http://localhost:5037
+
+GET {{CodePluse.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
