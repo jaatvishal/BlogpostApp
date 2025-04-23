@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Ang\\UdemyAng_Restapi\\API\\CodePluse.API\\CodePluse.API\\CodePluse.API.csproj": {}
+    "E:\\Ang\\CodePluse.API\\CodePluse.API\\CodePluse.API.csproj": {}
   },
   "projects": {
-    "E:\\Ang\\UdemyAng_Restapi\\API\\CodePluse.API\\CodePluse.API\\CodePluse.API.csproj": {
+    "E:\\Ang\\CodePluse.API\\CodePluse.API\\CodePluse.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Ang\\UdemyAng_Restapi\\API\\CodePluse.API\\CodePluse.API\\CodePluse.API.csproj",
+        "projectUniqueName": "E:\\Ang\\CodePluse.API\\CodePluse.API\\CodePluse.API.csproj",
         "projectName": "CodePluse.API",
-        "projectPath": "E:\\Ang\\UdemyAng_Restapi\\API\\CodePluse.API\\CodePluse.API\\CodePluse.API.csproj",
+        "projectPath": "E:\\Ang\\CodePluse.API\\CodePluse.API\\CodePluse.API.csproj",
         "packagesPath": "C:\\Users\\Vishal Choudhary\\.nuget\\packages\\",
-        "outputPath": "E:\\Ang\\UdemyAng_Restapi\\API\\CodePluse.API\\CodePluse.API\\obj\\",
+        "outputPath": "E:\\Ang\\CodePluse.API\\CodePluse.API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
