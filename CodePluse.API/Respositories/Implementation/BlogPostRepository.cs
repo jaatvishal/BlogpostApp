@@ -30,7 +30,7 @@ namespace CodePluse.API.Respositories.Implementation
         }
         public async Task<IEnumerable<BlogPost>> GetAllAsync()
         {
-            return await dbcontext.blogPosts.ToListAsync();
+            return await dbcontext.blogPosts.Include(x=>x.Categories).ToListAsync();
         }
     }
 }

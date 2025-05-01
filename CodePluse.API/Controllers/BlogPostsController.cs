@@ -11,9 +11,11 @@ namespace CodePluse.API.Controllers
     public class BlogPostsController : ControllerBase
     {
         private readonly IBlogPostRepository _blogPostRepository;
-        public BlogPostsController(IBlogPostRepository blogPostRepository)
+        private readonly ICategoryRespository _categoryRespository;
+        public BlogPostsController(IBlogPostRepository blogPostRepository,ICategoryRespository categoryRespository)
         {
             _blogPostRepository = blogPostRepository;
+            _categoryRespository = categoryRespository;
         }
 
         //Post :{apibaseurl}/api/blogposts
@@ -32,8 +34,19 @@ namespace CodePluse.API.Controllers
                     PublishedDate = request.PublishedDate,
                     ShortDescription = request.ShortDescription,
                     Title = request.Title,
-                    UrlHandle = request.UrlHandle
+                    UrlHandle = request.UrlHandle,
+                    Categories = new List<Category>()
                 };
+                  
+                foreach(var categoryGuid in request.Categories)
+                {
+                    var existingcategories = await _categoryRespository.GetById(categoryGuid);
+                    if(existingcategories is not null)
+                    {
+                        blogpost.Categories.Add(existingcategories);
+                    }
+                }
+
 
                 blogpost = await _blogPostRepository.CreateAysnc(blogpost);
 
@@ -49,7 +62,13 @@ namespace CodePluse.API.Controllers
                     PublishedDate = request.PublishedDate,
                     ShortDescription = request.ShortDescription,
                     Title = request.Title,
-                    UrlHandle = request.UrlHandle
+                    UrlHandle = request.UrlHandle,
+                    Categories = blogpost.Categories.Select(x => new CategoryDto
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                        UrlHandle = x.UrlHandle
+                    }).ToList()
 
                 };
 
@@ -85,7 +104,13 @@ namespace CodePluse.API.Controllers
                     Id = blogpost.Id,
                     ShortDescription = blogpost.ShortDescription,
                     Title = blogpost.Title,
-                    UrlHandle = blogpost.UrlHandle
+                    UrlHandle = blogpost.UrlHandle,
+                    Categories = blogpost.Categories.Select(x => new CategoryDto
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                        UrlHandle = x.UrlHandle
+                    }).ToList()
                 });
             }
             return Ok(response);

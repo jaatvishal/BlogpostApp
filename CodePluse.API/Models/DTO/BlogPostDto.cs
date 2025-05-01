@@ -13,5 +13,7 @@
 
         public string Author { get; set; }
         public bool IsVisible { get; set; }
+
+        public ICollection<CategoryDto> Categories { get; set; } = new List<CategoryDto>();
     }
 }
