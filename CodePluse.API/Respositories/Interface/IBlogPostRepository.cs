@@ -7,5 +7,10 @@ namespace CodePluse.API.Respositories.Interface
         Task<BlogPost> CreateAysnc(BlogPost blogPost);
 
         Task<IEnumerable<BlogPost>>GetAllAsync();
+
+        Task<BlogPost?> GetByIdAsync(Guid id);
+
+
+        Task<BlogPost?> UpdateAsync(BlogPost blogPost);
     }
 }
