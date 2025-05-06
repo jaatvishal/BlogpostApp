@@ -2,6 +2,7 @@ using CodePluse.API.Data;
 using CodePluse.API.Respositories.Implementation;
 using CodePluse.API.Respositories.Interface;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddHttpContextAccessor();  
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -19,6 +21,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => {
 
 builder.Services.AddScoped<ICategoryRespository, CategoryRepository>();
 builder.Services.AddScoped<IBlogPostRepository, BlogPostRepository>();
+builder.Services.AddScoped<IImageRespository,ImageRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -27,7 +30,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseDeveloperExceptionPage();
 app.UseHttpsRedirection();
 
 app.UseCors(
@@ -40,6 +43,12 @@ app.UseCors(
 
 
 app.UseAuthorization();
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Images")),
+    RequestPath=  "/Images"
+});
 
 app.MapControllers();
 

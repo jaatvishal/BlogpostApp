@@ -12,5 +12,7 @@ namespace CodePluse.API.Respositories.Interface
 
 
         Task<BlogPost?> UpdateAsync(BlogPost blogPost);
+
+        Task<BlogPost?> DeleteAsync(Guid id);
     }
 }

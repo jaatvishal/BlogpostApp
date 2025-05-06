@@ -11,5 +11,6 @@ namespace CodePluse.API.Data
           
         public DbSet<BlogPost>  blogPosts { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<BlogImage> BlogImages { get; set; }
     }
 }

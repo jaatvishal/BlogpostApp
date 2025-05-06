@@ -1,6 +1,7 @@
 ﻿using CodePluse.API.Data;
 using CodePluse.API.Models.Domain;
 using CodePluse.API.Respositories.Interface;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 
@@ -57,6 +58,18 @@ namespace CodePluse.API.Respositories.Implementation
 
             await dbcontext.SaveChangesAsync();
             return blogPost;
+        }
+
+        public async Task<BlogPost?> DeleteAsync(Guid id)
+        {
+            var exitsblogpost=await dbcontext.blogPosts.FirstOrDefaultAsync(x=>x.Id==id);
+            if (exitsblogpost == null)
+            {
+                return null;
+            }
+             dbcontext.blogPosts.Remove(exitsblogpost);
+            await dbcontext.SaveChangesAsync();
+            return exitsblogpost;
         }
     }
 }

@@ -199,5 +199,30 @@ namespace CodePluse.API.Controllers
             
             return Ok(response);
         }
+
+        //Delete :{apibase}/api/blogposts/{id}
+
+        [HttpDelete]
+        [Route("{id:guid}")]
+        public async Task<IActionResult> DeleteBlogPost([FromRoute] Guid id)
+        {
+            var isexists = await _blogPostRepository.DeleteAsync(id);
+             if(isexists == null) { return NotFound();
+                }
+             var response = new BlogPostDto
+             {
+                 Author = isexists.Author,
+                 Content = isexists.Content,
+                 PublishedDate = isexists.PublishedDate,
+                 FeaturedImageURl = isexists.FeaturedImageURl,
+                 Id = id,
+                 IsVisible = isexists.IsVisible,
+                 ShortDescription = isexists.ShortDescription,
+                 Title = isexists.Title,
+                 UrlHandle = isexists.UrlHandle
+             };
+
+            return Ok(response);
+        }
     }
 }
