@@ -1,5 +1,6 @@
 ﻿using CodePluse.API.Models.Domain;
 using CodePluse.API.Models.DTO;
+using CodePluse.API.Respositories.Implementation;
 using CodePluse.API.Respositories.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -140,6 +141,41 @@ namespace CodePluse.API.Controllers
                 };
 
                 return Ok(reponse); 
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+
+        // GET  :{apibaseurl}/api/blogPosts/{urlhandle}
+
+        [HttpGet]
+        [Route("{urlHandle}")]
+        public async Task<IActionResult> GetBlogPostsByUrlHandle([FromRoute] string urlHandle)
+        {
+             //Get  blogpost details from respository  
+            var blogpostdomain = await _blogPostRepository.GetByUrlHandleAsync(urlHandle);
+            if (blogpostdomain is not null)
+            {
+                var reponse = new BlogPostDto
+                {
+                    Author = blogpostdomain.Author,
+                    Content = blogpostdomain.Content,
+                    Id = blogpostdomain.Id,
+                    ShortDescription = blogpostdomain.ShortDescription,
+                    Title = blogpostdomain.Title,
+                    UrlHandle = blogpostdomain.UrlHandle,
+                    FeaturedImageURl = blogpostdomain.FeaturedImageURl,
+                    IsVisible = blogpostdomain.IsVisible,
+                    PublishedDate = blogpostdomain.PublishedDate,
+                    Categories = blogpostdomain.Categories.
+                    Select(x => new CategoryDto
+                    { Id = x.Id, Name = x.Name, UrlHandle = x.UrlHandle }).ToList()
+                };
+
+                return Ok(reponse);
             }
             else
             {

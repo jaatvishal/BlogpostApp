@@ -71,5 +71,10 @@ namespace CodePluse.API.Respositories.Implementation
             await dbcontext.SaveChangesAsync();
             return exitsblogpost;
         }
+
+        public async Task<BlogPost?> GetByUrlHandleAsync(string urlHandle)
+        {
+            return await dbcontext.blogPosts.Include(x => x.Categories).FirstOrDefaultAsync(x => x.UrlHandle == urlHandle);
+        }
     }
 }
