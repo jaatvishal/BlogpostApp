@@ -19,7 +19,7 @@ namespace CodePluse.API.Controllers
            this.categoryRespository = categoryRespository;
         }
         [HttpPost]
-        [Authorize(Roles = "Writer")]
+        //[Authorize(Roles = "Writer")]
         public async Task<IActionResult> CreateCategory(CreateCategoryRequestDto request)
         {
             // Map DTO to Domain MOdel
@@ -40,11 +40,11 @@ namespace CodePluse.API.Controllers
             return Ok(response);
         }
 
-        // GET :/api/categories
+        // GET :https://localhost:7226/api/categories?query=html 
         [HttpGet]
-        public async Task<IActionResult> GetAllCategories()
+        public async Task<IActionResult> GetAllCategories([FromQuery] string? query, [FromQuery] string sortBy, [FromQuery] string sortDirection,[FromQuery] int? pageNumber, [FromQuery] int? pageSize )
         {
-           var caterogies= await categoryRespository.GetAllAsync();
+           var caterogies= await categoryRespository.GetAllAsync(query,sortBy,sortDirection,pageNumber,pageSize);
 
             //map Domain model to DTO
             var  response=new List<CategoryDto>();
@@ -127,5 +127,15 @@ namespace CodePluse.API.Controllers
             };
             return Ok(response);
         }
+
+        // GET: https://localhost:7726/api/categories/count
+        [HttpGet]
+        [Route("count")]
+        //[Authorize(Roles ="Writer")]
+        public async Task<IActionResult> GetCategoriesTotal()
+        {
+            var count = await categoryRespository.GetCount();
+            return Ok(count);
+        } 
     }
 }

@@ -24,30 +24,38 @@ namespace CodePluse.API.Controllers
         [Route("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestDto request)
         {
-            var indentityuser=await userManager.FindByEmailAsync(request.Email);
-            if (indentityuser is not null)
-            {
-                // check password 
-                var checkpaswordresult=await userManager.CheckPasswordAsync(indentityuser, request.Password);
-                if (checkpaswordresult)
+            try {
+                var indentityuser = await userManager.FindByEmailAsync(request.Email);
+                if (indentityuser is not null)
                 {
-                    var roles =await userManager.GetRolesAsync(indentityuser);  
+                    // check password 
+                    var checkpaswordresult = await userManager.CheckPasswordAsync(indentityuser, request.Password);
+                    if (checkpaswordresult)
+                    {
+                        var roles = await userManager.GetRolesAsync(indentityuser);
 
-                    // create a token and response
-                    var jwtToken= tokenRepository.CreateJwtToken(indentityuser, roles.ToList()); 
+                        // create a token and response
+                        var jwtToken = tokenRepository.CreateJwtToken(indentityuser, roles.ToList());
 
-                    var response = new LoginResponseDto() { 
-                        Email = request.Email,
-                    Roles=roles.ToList(),
-                    Token= jwtToken
-                    };
+                        var response = new LoginResponseDto()
+                        {
+                            Email = request.Email,
+                            Roles = roles.ToList(),
+                            Token = jwtToken
+                        };
 
-                    return Ok(response);
+                        return Ok(response);
+                    }
+
                 }
-
+                ModelState.AddModelError("", "Email or Password Incorrect");
+                return ValidationProblem(ModelState);
             }
-            ModelState.AddModelError("","Email or Password Incorrect");
-            return ValidationProblem(ModelState);
+            catch(Exception ex)
+            {
+                return null;
+            }
+            
         }
 
         //Post :{apibaseurl}/api/auth/register
