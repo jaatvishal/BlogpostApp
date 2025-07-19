@@ -7,7 +7,7 @@
 
         public string ShortDescription { get; set; }
         public string Content { get; set; }
-        public string FeaturedImageURl { get; set; }
+        public string FeaturedImageUrl { get; set; }
         public string UrlHandle { get; set; }
         public DateTime PublishedDate { get; set; }
 

@@ -42,7 +42,7 @@ namespace CodePluse.API.Controllers
 
         // GET :https://localhost:7226/api/categories?query=html 
         [HttpGet]
-        public async Task<IActionResult> GetAllCategories([FromQuery] string? query, [FromQuery] string sortBy, [FromQuery] string sortDirection,[FromQuery] int? pageNumber, [FromQuery] int? pageSize )
+        public async Task<IActionResult> GetAllCategories([FromQuery] string? query, [FromQuery] string? sortBy, [FromQuery] string? sortDirection,[FromQuery] int? pageNumber, [FromQuery] int? pageSize )
         {
            var caterogies= await categoryRespository.GetAllAsync(query,sortBy,sortDirection,pageNumber,pageSize);
 
